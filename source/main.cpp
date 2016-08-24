@@ -39,11 +39,12 @@ static void main_alloc(void)
 {
     const uint32_t kB = 1024;
     uint16_t seed = 0x10;
-    SecureAllocator alloc = secure_allocator_create_with_pages(4*kB, 1*kB);
+    // Silabs only has space for 4 pages, so this allocator needs to go
+    // SecureAllocator alloc = secure_allocator_create_with_pages(4*kB, 1*kB);
 
     while (1) {
         alloc_fill_wait_verify_free(500, seed, 577);
-        specific_alloc_fill_wait_verify_free(alloc, 5*kB, seed, 97);
+        // specific_alloc_fill_wait_verify_free(alloc, 1*kB, seed, 97);
         seed++;
     }
 }
