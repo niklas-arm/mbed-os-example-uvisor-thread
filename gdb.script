@@ -1,0 +1,15 @@
+	layout split
+	focus cmd
+	target remote localhost:2331
+	monitor endian little
+	monitor reset
+	monitor halt
+	monitor semihosting enable
+	monitor speed 1000
+	monitor loadbin ./.build/K64F/GCC_ARM/mpu_interface.bin 0
+	monitor flash device = MK64FN1M0XXX12
+	load ./.build/K64F/GCC_ARM/mpu_interface.elf
+	file ./.build/K64F/GCC_ARM/mpu_interface.elf
+	dir mbed-os/features/FEATURE_UVISOR/importer/TARGET_IGNORE/uvisor
+	add-symbol-file debug.elf uvisor_init
+	c
