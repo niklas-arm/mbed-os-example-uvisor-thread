@@ -28,12 +28,13 @@ MAIN_ACL(g_main_acl);
 extern "C" void SVC_Handler(void);
 extern "C" void PendSV_Handler(void);
 extern "C" void SysTick_Handler(void);
+extern "C" uint32_t rt_suspend(void);
 
-UVISOR_SET_PRIV_SYS_IRQ_HOOKS(SVC_Handler, PendSV_Handler, SysTick_Handler);
+UVISOR_SET_PRIV_SYS_HOOKS(SVC_Handler, PendSV_Handler, SysTick_Handler, rt_suspend);
 
 /* Enable uVisor. */
 UVISOR_SET_MODE_ACL(UVISOR_ENABLED, g_main_acl);
-UVISOR_SET_PAGE_HEAP(8*1024, 5);
+UVISOR_SET_PAGE_HEAP(8*1024, 4);
 
 static void main_alloc(void)
 {

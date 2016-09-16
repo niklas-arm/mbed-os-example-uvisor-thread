@@ -6,10 +6,10 @@
 	monitor halt
 	monitor semihosting enable
 	monitor speed 1000
-	monitor loadbin ./.build/K64F/GCC_ARM/mpu_interface.bin 0
-	monitor flash device = MK64FN1M0XXX12
-	load ./.build/K64F/GCC_ARM/mpu_interface.elf
-	file ./.build/K64F/GCC_ARM/mpu_interface.elf
+	monitor loadbin ./.build/EFM32GG_STK3700/GCC_ARM/mpu_interface.bin 0
+	monitor flash device = EFM32GG990F1024
+	load ./.build/EFM32GG_STK3700/GCC_ARM/mpu_interface.elf
+	file ./.build/EFM32GG_STK3700/GCC_ARM/mpu_interface.elf
 	dir mbed-os/features/FEATURE_UVISOR/importer/TARGET_IGNORE/uvisor
 	add-symbol-file debug.elf uvisor_init
 	c

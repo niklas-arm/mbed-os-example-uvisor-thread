@@ -24,8 +24,8 @@ PREFIX:=arm-none-eabi-
 GDB:=$(PREFIX)gdb
 OBJDUMP:=$(PREFIX)objdump
 
-MBED_TARGET:=K64F
-# MBED_TARGET:=EFM32GG_STK3700
+# MBED_TARGET:=K64F
+MBED_TARGET:=EFM32GG_STK3700
 
 MBED_TOOLCHAIN:=GCC_ARM
 
@@ -37,7 +37,7 @@ ifneq (,$(findstring K64F,$(MBED_TARGET)))
 else
 	CPU:=EFM32GG990F1024
 	UVISOR_PLATFORM:=efm32
-	UVISOR_CONFIGURATION:=configuration_efm32_m3_p1
+	UVISOR_CONFIGURATION:=configuration_efm32_cortex_m3_p1
 endif
 
 # JLink settings
