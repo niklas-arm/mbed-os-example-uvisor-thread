@@ -25,27 +25,30 @@ MAIN_ACL(g_main_acl);
 
 
 /* Register privleged system IRQ hooks. */
-extern "C" void SVC_Handler(void);
-extern "C" void PendSV_Handler(void);
-extern "C" void SysTick_Handler(void);
-extern "C" uint32_t rt_suspend(void);
-
-UVISOR_SET_PRIV_SYS_HOOKS(SVC_Handler, PendSV_Handler, SysTick_Handler, rt_suspend);
+// extern "C" void SVC_Handler(void);
+// extern "C" void PendSV_Handler(void);
+// extern "C" void SysTick_Handler(void);
+// extern "C" uint32_t rt_suspend(void);
+// extern "C" void rt_svc_init(void);
+//
+// UVISOR_SET_PRIV_SYS_HOOKS(SVC_Handler, PendSV_Handler, SysTick_Handler, rt_suspend, rt_svc_init);
 
 /* Enable uVisor. */
 UVISOR_SET_MODE_ACL(UVISOR_ENABLED, g_main_acl);
-UVISOR_SET_PAGE_HEAP(8*1024, 4);
+UVISOR_SET_PAGE_HEAP(8*1024, 1);
+
+const uint32_t kB = 1024;
 
 static void main_alloc(void)
 {
     const uint32_t kB = 1024;
     uint16_t seed = 0x10;
     // Silabs only has space for 4 pages, so this allocator needs to go
-    // SecureAllocator alloc = secure_allocator_create_with_pages(4*kB, 1*kB);
+    SecureAllocator alloc = secure_allocator_create_with_pages(4*kB, 1*kB);
 
     while (1) {
         alloc_fill_wait_verify_free(500, seed, 577);
-        // specific_alloc_fill_wait_verify_free(alloc, 1*kB, seed, 97);
+        specific_alloc_fill_wait_verify_free(alloc, 1*kB, seed, 97);
         seed++;
     }
 }
@@ -53,6 +56,7 @@ static void main_alloc(void)
 int main(void)
 {
     osStatus status;
+
     Thread * thread = new Thread();
     status = thread->start(main_alloc);
     if (status != osOK) {
@@ -66,7 +70,9 @@ int main(void)
 
     while (1)
     {
+        count++;
         printf("Main loop count: %d\r\n", count++);
+        Thread::wait(1000);
     }
 
     return 0;

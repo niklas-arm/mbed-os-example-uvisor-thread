@@ -115,7 +115,7 @@ gdbserver:
 	$(JLINK_SERVER) $(JLINK_CFG)
 
 uvisor:
-	make -C $(UVISOR_LIB) clean all
+	make -C $(UVISOR_LIB)/importer
 
 uvisor_clean:
 	make -C $(UVISOR_LIB) clean
