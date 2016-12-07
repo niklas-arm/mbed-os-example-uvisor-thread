@@ -1,5 +1,6 @@
 .DS_Store
 .build
+BUILD
 gdb.script
 *.sw*
 mbed_settings.py*
