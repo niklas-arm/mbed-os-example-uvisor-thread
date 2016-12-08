@@ -29,6 +29,8 @@
 #define MAIN_BTN SW2
 #define MAIN_BTN_PUPD PullUp
 
+#if defined TARGET_K64F
+
 #define MAIN_ACL(acl_list_name) \
     static const UvisorBoxAclItem acl_list_name[] = {     \
         {SIM,    sizeof(*SIM),    UVISOR_TACLDEF_PERIPH}, \
@@ -47,5 +49,23 @@
         {I2C0,   sizeof(*I2C0),   UVISOR_TACLDEF_PERIPH}, \
         {SPI0,   sizeof(*SPI0),   UVISOR_TACLDEF_PERIPH}, \
     }
+
+#elif defined TARGET_MPS2
+
+#define MAIN_ACL(acl_list_name) \
+    static const UvisorBoxAclItem acl_list_name[] = { \
+        {CMSDK_GPIO0, sizeof(*CMSDK_GPIO0), UVISOR_TACLDEF_PERIPH}, \
+        {CMSDK_GPIO1, sizeof(*CMSDK_GPIO1), UVISOR_TACLDEF_PERIPH}, \
+        {CMSDK_UART0, sizeof(*CMSDK_UART0), UVISOR_TACLDEF_PERIPH}, \
+        {CMSDK_UART1, sizeof(*CMSDK_UART1), UVISOR_TACLDEF_PERIPH}, \
+        {CMSDK_UART2, sizeof(*CMSDK_UART2), UVISOR_TACLDEF_PERIPH}, \
+        {CMSDK_DUALTIMER, sizeof(*CMSDK_DUALTIMER), UVISOR_TACLDEF_PERIPH}, \
+    }
+
+#else
+
+#error "Target not supported."
+
+#endif
 
 #endif /* __UVISOR_HELLOWORLD_MAIN_HW_H__ */
